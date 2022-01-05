@@ -49,20 +49,7 @@ export class UsersController {
   @ApiOperation({ summary: '회원가입' })
   @Post()
   async join(@Body() data: CreateUserRequestDto) {
-    const user = this.usersService.findByEmail(data.email);
-    if (!user) {
-      throw new NotFoundException();
-    }
-    const result = await this.usersService.join(
-      data.email,
-      data.nickname,
-      data.password,
-    );
-    if (result) {
-      return 'ok';
-    } else {
-      throw new ForbiddenException();
-    }
+    await this.usersService.join(data.email, data.nickname, data.password);
   }
 
   @ApiOperation({ summary: '로그아웃' })
